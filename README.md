@@ -1,6 +1,6 @@
 <center>
 
-![logo](./src/assets/logo.svg)
+![logo](assets/images/logo.png)
 
 > Uma plataforma desenvolvida para incentivar e apoiar a participação feminina nas áreas STEM (Ciência, Tecnologia, Engenharia e Matemática).
 
