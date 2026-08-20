@@ -1,18 +1,27 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { useFonts } from 'expo-font'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar'
+import { Stack } from 'expo-router'
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+export default function RootLayout(){
 
-SplashScreen.preventAutoHideAsync();
+  const [fontes] = useFonts({
+    MoonbaseAlpha: require("@/assets/fonts/MoonbaseAlpha-Regular.otf"),
+    Outfit: require("@/assets/fonts/Outfit-VariableFont_wght.ttf"),
+  })
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  if (!fontes) {
+    console.log('Carregando fontes...')
+    return null
+  }
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+    <SafeAreaProvider>
+      <StatusBar style='light'/>
+      <Stack screenOptions={{headerShown: false}}>
+        <Stack.Screen name='index'/>
+      </Stack>
+    </SafeAreaProvider>
+  )
+
 }
