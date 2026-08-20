@@ -1,56 +1,37 @@
-# Welcome to your Expo app 👋
+<center>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![logo](./src/assets/logo.svg)
 
-## Get started
+> Uma plataforma desenvolvida para incentivar e apoiar a participação feminina nas áreas STEM (Ciência, Tecnologia, Engenharia e Matemática).
 
-1. Install dependencies
+## 📖 Sobre o Projeto
 
-   ```bash
-   npm install
-   ```
+A baixa representatividade feminina em áreas STEM ainda é uma realidade em diversos ambientes acadêmicos e profissionais.  
+Questões como estereótipos de gênero, falta de incentivo, preconceito e ausência de referências femininas podem impactar  
+diretamente a escolha e permanência de mulheres nesses setores.
 
-2. Start the app
+Este projeto tem como objetivo criar uma plataforma digital que promove a conscientização, informação e apoio  
+para mulheres interessadas em seguir carreiras científicas e tecnológicas, contribuindo para um ambiente mais inclusivo e diverso.
 
-   ```bash
-   npx expo start
-   ```
 
-In the output, you'll find options to open the app in a
+## ✨ Funcionalidades Planejadas
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+📰 Blog com conteúdos educativos;  
+💬 Fórum para compartilhar relatos e experiências;  
+📚 Materiais de apoio e capacitação;  
+📅 Divulgação de eventos e oportunidades;  
+👤 Cadastro e autenticação de usuários;  
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## 🚧 Status do Projeto
 
-When you're ready, run:
+Em fase de desenvolvimento! :)  
 
-```bash
-npm run reset-project
-```
+- [🖥️ Versão web](https://github.com/emillysbrito/marilace)  
+- [🖌️ Protótipo no Figma](https://www.figma.com/proto/09zZXEJs0qzUq8xxNfcSO9/MariLace---Prot%C3%B3tipo?node-id=0-1&t=Yy4xUNg8leJTRCyS-1)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+*Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC) do curso Técnico em Desenvolvimento de Sistemas.*
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+</center>
