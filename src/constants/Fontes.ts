@@ -6,5 +6,5 @@ export const Fontes = {
     M: 16,
     G: 20,
     GG: 24,
-    XG: 32
+    XG: 36
 }

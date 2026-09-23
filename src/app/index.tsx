@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: 24,
-    paddingBottom: 32,
+    paddingBottom: 56,
   },
 
   topo: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
 
   botoes: {
-    gap: 16,
+    gap: 12,
   },
 
   botao: {
