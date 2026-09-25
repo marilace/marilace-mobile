@@ -7,6 +7,7 @@ import {
     signOut,
 } from "firebase/auth";
 import { useContext } from "react";
+
 export function useAutenticacao() {
   const autenticacaoContexto = useContext(AutenticacaoContexto);
 
@@ -18,6 +19,8 @@ export function useAutenticacao() {
     autenticacaoContexto;
 
   const criarAutenticacaoUsuario = async (
+    nome: string,
+    username: string,
     email: string,
     senha: string,
   ): Promise<string> => {

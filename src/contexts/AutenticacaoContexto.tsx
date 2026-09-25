@@ -12,6 +12,8 @@ interface AutenticacaoContextoObjeto{
 export const AutenticacaoContexto = createContext<AutenticacaoContextoObjeto | undefined>(undefined);
 
 export function AutenticacaoProvider({ children }: { children: ReactNode}){
+    
+    const [uidAtual, setUidAtual] = useState<string | null>(null)
     const [usuarioContexto, setUsuarioContexto] = useState<UsuarioTipo | null>(null)
     const [carregando, setCarregando] = useState(true)
 
