@@ -2,10 +2,15 @@ import React from 'react';
 import {
   View, Text, Image, ImageBackground, TouchableOpacity, StyleSheet, SafeAreaView, StatusBar,
 } from 'react-native';
+import { router } from 'expo-router';
 import { Fontes } from '@/constants/Fontes';
 import { Cores } from '@/constants/Cores';
+import { FontAwesomeFreeSolid } from "@react-native-vector-icons/fontawesome-free-solid";
 
-export default function EscolhaLoginRegistro() {
+export default function Inicio() {
+
+  const abrirLogin = () => router.push('/login')
+  const abrirRegistro = () => router.push('/registro')
 
   return (
     <ImageBackground
@@ -35,6 +40,7 @@ export default function EscolhaLoginRegistro() {
             <TouchableOpacity
               style={[styles.botao, styles.botaoVerde]}
               activeOpacity={0.8}
+              onPress={abrirLogin}
             >
               <Image
                 source={require('@/assets/images/estrela1.png')}
@@ -52,6 +58,7 @@ export default function EscolhaLoginRegistro() {
             <TouchableOpacity
               style={[styles.botao, styles.botaoRosa]}
               activeOpacity={0.8}
+              onPress={abrirRegistro}
             >
               <Image
                 source={require('@/assets/images/estrela1.png')}
