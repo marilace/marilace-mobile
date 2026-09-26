@@ -1,12 +1,13 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useState, useEffect, ReactNode, use } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { UsuarioTipo } from "@/types/Usuario";
+import { type UsuarioTipo } from "@/types/Usuario";
+import { autenticacao, banco } from "@/services/Firebase";
+import { onAuthStateChanged } from "@firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
 
 interface AutenticacaoContextoObjeto{
-    usuarioContexto: UsuarioTipo | null
+    usuario: UsuarioTipo | null
     carregando: boolean
-    logarContexto: (dadosUsuario: UsuarioTipo) => Promise<void>
-    deslogarContexto: () => Promise<void>
 }
 
 export const AutenticacaoContexto = createContext<AutenticacaoContextoObjeto | undefined>(undefined);
@@ -14,46 +15,52 @@ export const AutenticacaoContexto = createContext<AutenticacaoContextoObjeto | u
 export function AutenticacaoProvider({ children }: { children: ReactNode}){
     
     const [uidAtual, setUidAtual] = useState<string | null>(null)
-    const [usuarioContexto, setUsuarioContexto] = useState<UsuarioTipo | null>(null)
+    const [usuario, setUsuario] = useState<UsuarioTipo | null>(null)
     const [carregando, setCarregando] = useState(true)
 
     useEffect(() => {
-        async function carregarSessaoSalva() {
-            try {
-                const sessaoSalva = await AsyncStorage.getItem('@marilace:usuario')
-                if (sessaoSalva) {
-                    setUsuarioContexto(JSON.parse(sessaoSalva))
-                }
-            } catch (error) {
-                console.log('Erro ao carregar dados do AsyncStorage:', error)
-            } finally {
+        const unsubcribe = onAuthStateChanged(autenticacao, (usuarioFirebase) => {
+            if (usuarioFirebase) {
+                setUidAtual(usuarioFirebase.uid)
+            } else {
+                setUidAtual(null)
+                setUsuario(null)
                 setCarregando(false)
             }
-        }
-
-        carregarSessaoSalva()
+        })
+        return () => unsubcribe()
     }, [])
 
-    const logarContexto = async (dadosUsuario: UsuarioTipo) => {
-        try {
-            setUsuarioContexto(dadosUsuario)
-            await AsyncStorage.setItem('@marilace:usuario', JSON.stringify(dadosUsuario))
-        } catch (error) {
-            console.log('Erro ao salvar dados no AsyncStorage:', error)
-        }
-    }
+    useEffect(() => {
+        if (!uidAtual) return
 
-    const deslogarContexto = async () => {
-        try {
-            setUsuarioContexto(null)
-            await AsyncStorage.removeItem('@marilace:usuario')
-        } catch (error) {
-            console.log('Erro ao remover dados do AsyncStorage:', error)
-        }
-    }
+        const usuarioRef = doc(banco, 'users', uidAtual)
+        const unsubscribe = onSnapshot(usuarioRef, (snap) => {
+            if (snap.exists()) {
+                const dados = snap.data()
+                setUsuario({
+                    uid: uidAtual,
+                    username: dados.username,
+                    email: dados.email ?? autenticacao.currentUser?.email ?? '',
+                    nome: dados.displayName,
+                    bio: dados.bio,
+                    photoURL: dados.photoURL,
+                    followersCount: dados.followersCount,
+                    followingCount: dados.followingCount,
+                    emblemas: dados.emblemas ?? [],
+                })
+            } else {
+                setUsuario(null)
+            }
+            setCarregando(false)
+        })
+
+        return () => unsubscribe()
+
+    }, [uidAtual])
 
     return (
-        <AutenticacaoContexto.Provider value={{ usuarioContexto, carregando, logarContexto, deslogarContexto }}>
+        <AutenticacaoContexto.Provider value={{ usuario, carregando }}>
             {children}
         </AutenticacaoContexto.Provider>
     )
