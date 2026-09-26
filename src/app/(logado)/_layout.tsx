@@ -5,8 +5,12 @@ import { StatusBar } from 'expo-status-bar'
 export default function AuthLayout(){
     return(
         <SafeAreaProvider>
-            <StatusBar style='light'/>
-                <Stack screenOptions={{headerShown: false}}>
+            <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="home" />
+                <Stack.Screen
+                    name="novo-post"
+                    options={{ presentation: 'modal' }}
+                />
             </Stack>
         </SafeAreaProvider>
     )

@@ -7,7 +7,10 @@ import {
     FirebaseError,
     signInWithEmailAndPassword,
 } from "@/services/Firebase";
+
+//TODO: substituir pelo tabler icons (a mesma q o web)
 import { FontAwesomeFreeSolid } from "@react-native-vector-icons/fontawesome-free-solid";
+
 import { useFonts } from "expo-font";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -19,7 +22,8 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 SplashScreen.preventAutoHideAsync();
 
 function Validacoes() {
-  const { usuarioContexto, carregando } = useAutenticacao();
+  const { usuario, carregando } = useAutenticacao();
+  
   const segments = useSegments();
   const router = useRouter();
 
@@ -31,6 +35,10 @@ function Validacoes() {
     Outfit: require("@/assets/fonts/Outfit-VariableFont_wght.ttf"),
   });
 
+  //TODO: tirar essa verificação depois q entregar, 
+  // é ela q ta fazendo com que o app atualize a cada
+  // mudança de código e bloqueia o IP por um tempo
+  //(pode tirar o bloco inteiro e do próximo useEffect)
   useEffect(() => {
     signInWithEmailAndPassword(
       autenticacao,
@@ -86,12 +94,12 @@ function Validacoes() {
 
     const grupoProtegido = segments[0] === "(logado)";
 
-    if (!usuarioContexto && grupoProtegido) {
+    if (!usuario && grupoProtegido) {
       router.replace("/"); //usuario nao logado: redireciona p/ login
-    } else if (usuarioContexto && !grupoProtegido) {
+    } else if (usuario && !grupoProtegido) {
       router.replace("/(logado)/home"); //usuario logado: forum
     }
-  }, [usuarioContexto, conectadoFirebase, fontes, carregando, segments]);
+  }, [usuario, conectadoFirebase, fontes, carregando, segments]);
 
   if (mensagemErro) {
     return (
