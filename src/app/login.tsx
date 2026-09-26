@@ -28,7 +28,7 @@ export default function Login() {
     senha: "",
   });
 
-  const { validarUsuario, logarContexto } = useAutenticacao();
+  const { validarUsuario } = useAutenticacao();
 
   const verificarUsuario = async () => {
     if (!usuario.email || !usuario.senha) {
@@ -41,9 +41,7 @@ export default function Login() {
 
     let retorno = await validarUsuario(usuario.email, usuario.senha);
 
-    if (retorno == "sucesso") {
-      await logarContexto(usuario);
-
+    if (retorno == "Sucesso!") {
       router.push("/(logado)/home");
     } else {
       Alert.alert("Falha de autenticação", retorno, [{ text: "OK" }], {
