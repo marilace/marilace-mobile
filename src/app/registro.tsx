@@ -32,7 +32,7 @@ export default function Registro() {
   const autenticacao = useAutenticacao();
 
   const salvar = async () => {
-    if (!usuario.email || !usuario.senha) {
+    if (!usuario.email || !usuario.senha || !usuario.username) {
       Alert.alert(
         "Erro no Cadastro",
         "Por favor, preencha os campos obrigatórios.",
@@ -43,9 +43,11 @@ export default function Registro() {
     let retorno = await autenticacao.criarAutenticacaoUsuario(
       usuario.email,
       usuario.senha,
+      usuario.username,
+      usuario.nome ?? "",
     );
 
-    if (retorno == "sucesso") {
+    if (retorno == "Sucesso!") {
       Alert.alert("Novo usuário", `Boas-vindas ${usuario.nome}!`, [
         {
           text: "Ok",
