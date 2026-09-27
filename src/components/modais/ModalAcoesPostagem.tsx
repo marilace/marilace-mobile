@@ -1,4 +1,10 @@
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
+import { 
+    Modal, 
+    Pressable, 
+    StyleSheet, 
+    Text, 
+    View 
+} from 'react-native'
 import { Cores } from '@/constants/Cores'
 import { Fontes } from '@/constants/Fontes'
 import { FontAwesomeFreeSolid } from '@react-native-vector-icons/fontawesome-free-solid'

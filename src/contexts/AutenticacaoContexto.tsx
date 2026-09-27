@@ -1,4 +1,9 @@
-import React, { createContext, useState, useEffect, ReactNode, use } from "react";
+import { 
+    createContext, 
+    useState, 
+    useEffect, 
+    ReactNode
+} from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { type UsuarioTipo } from "@/types/Usuario";
 import { autenticacao, banco } from "@/services/Firebase";

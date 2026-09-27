@@ -98,20 +98,24 @@ export default function NovoPost() {
             </View>
 
             <KeyboardAvoidingView
-                style={styles.flex}
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            style={styles.flex}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
                 <ScrollView
-                    contentContainerStyle={styles.conteudo}
-                    keyboardShouldPersistTaps="handled"
+                contentContainerStyle={styles.conteudo}
+                keyboardShouldPersistTaps="handled"
                 >
                     <View style={styles.linhaAutor}>
                         {usuario?.photoURL ? (
+
                             <Image source={{ uri: usuario.photoURL }} style={styles.avatar} />
+
                         ) : (
+
                             <View style={styles.avatarPadrao}>
                                 <FontAwesomeFreeSolid name="user" size={18} color={Cores.primaria} />
                             </View>
+                            
                         )}
                         <Text style={styles.nomeUsuario}>
                             {usuario?.nome ?? usuario?.username ?? 'Usuário'}
@@ -119,15 +123,15 @@ export default function NovoPost() {
                     </View>
 
                     <TextInput
-                        style={styles.inputPostagem}
-                        multiline
-                        maxLength={300}
-                        placeholder="O que você está pensando?"
-                        placeholderTextColor={Cores.cinza}
-                        value={texto}
-                        onChangeText={setTexto}
-                        editable={!enviando}
-                        autoFocus
+                    style={styles.inputPostagem}
+                    multiline
+                    maxLength={300}
+                    placeholder="O que você está pensando?"
+                    placeholderTextColor={Cores.cinza}
+                    value={texto}
+                    onChangeText={setTexto}
+                    editable={!enviando}
+                    autoFocus
                     />
                     <Text style={styles.contador}>{texto.length}/300</Text>
 
@@ -269,7 +273,7 @@ const styles = StyleSheet.create({
         fontFamily: Fontes.base,
         fontSize: Fontes.PP,
         fontWeight: '600',
-        color: '#e53e3e',
+        color: Cores.erro,
     },
     barraAcoes: {
         flexDirection: 'row',

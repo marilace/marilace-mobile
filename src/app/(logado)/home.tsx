@@ -1,5 +1,13 @@
 import { useState } from 'react'
-import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
+import { 
+    ActivityIndicator, 
+    FlatList, 
+    Pressable, 
+    StyleSheet, 
+    Text, 
+    View, 
+    Image 
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import { Post } from '@/components/post/Post'
@@ -16,53 +24,75 @@ export default function Forum() {
     const { publicacoes, carregando } = useFeed()
     const [modalAberto, setModalAberto] = useState(false)
 
-    const abrirNovoPost = () => {
-        router.push("/(logado)/novo-post")
-    }
+    const abrirNovoPost = () => router.push("/(logado)/novo-post")
+    const abrirPerfil = () => router.push(`/perfil/${usuario?.username}`)
+    const abrirNotificacoes = () => router.push('/(logado)/notificacoes')
 
     return (
         <SafeAreaView style={styles.tela}>
             <StatusBar style="dark" />
 
             <View style={styles.cabecalho}>
-                <Text style={styles.logo}>ml</Text>
 
-                <View style={styles.btnPerfil} accessibilityLabel="Perfil">
-                    <FontAwesomeFreeSolid name="user" size={16} color={Cores.primariaEscura} />
+                <Image
+                source={require('@/assets/images/logoForum.png')}
+                style={styles.logo}
+                resizeMode="contain"
+                />
+
+                <View style={styles.acoesCabecalho}>
+
+                    <Pressable
+                    onPress={abrirNotificacoes}
+                    hitSlop={8}
+                    accessibilityLabel="Notificações"
+                    >
+                        <FontAwesomeFreeSolid name="bell" size={20} color={Cores.primaria}/>
+                    </Pressable>
+
+                    <Pressable
+                    onPress={abrirPerfil}
+                    style={styles.btnPerfil} 
+                    accessibilityLabel="Perfil"
+                    >
+                        {usuario?.photoURL ? (
+                            <Image source={{ uri: usuario?.photoURL }} style={styles.avatarImg} />
+                        ) : (
+                            <FontAwesomeFreeSolid name="user" size={16} color={Cores.primaria} />
+                        )}
+                    </Pressable>
+
                 </View>
+                
             </View>
 
-            <Pressable style={styles.inputPost} onPress={abrirNovoPost}>
-                <View style={styles.avatarPerfil}>
-                    <FontAwesomeFreeSolid name="user" size={16} color={Cores.primaria} />
-                </View>
-                <Text style={styles.inputPostTexto}>O que você está pensando?</Text>
-            </Pressable>
-
             {carregando ? (
+
                 <ActivityIndicator style={styles.loading} color={Cores.primaria} />
+
             ) : (
+
                 <FlatList
-                    data={publicacoes}
-                    keyExtractor={(post) => post.id}
-                    contentContainerStyle={styles.lista}
-                    ItemSeparatorComponent={() => <View style={styles.separador} />}
-                    renderItem={({ item: post }) => (
-                        <Post
-                            postId={post.id}
-                            authorId={post.authorId}
-                            avatarSrc={post.authorPhotoURL}
-                            nome={post.authorDisplayName}
-                            username={post.authorUsername}
-                            emblemas={post.authorEmblemas}
-                            tempo={formatarTempo(post.createdAt)}
-                            conteudo={post.text}
-                            imagemUrl={post.imageURL}
-                            curtidas={post.likesCount}
-                            comentarios={post.commentsCount}
-                            compartilhamentos={0}
-                        />
-                    )}
+                data={publicacoes}
+                keyExtractor={(post) => post.id}
+                contentContainerStyle={styles.lista}
+                ItemSeparatorComponent={() => <View style={styles.separador} />}
+                renderItem={({ item: post }) => (
+                    <Post
+                    postId={post.id}
+                    authorId={post.authorId}
+                    avatarSrc={post.authorPhotoURL}
+                    nome={post.authorDisplayName}
+                    username={post.authorUsername}
+                    emblemas={post.authorEmblemas}
+                    tempo={formatarTempo(post.createdAt)}
+                    conteudo={post.text}
+                    imagemUrl={post.imageURL}
+                    curtidas={post.likesCount}
+                    comentarios={post.commentsCount}
+                    compartilhamentos={0}
+                    />
+                )}
                 />
             )}
         </SafeAreaView>
@@ -82,44 +112,28 @@ const styles = StyleSheet.create({
         paddingBottom: 12,
     },
     logo: {
-        fontFamily: Fontes.logo,
-        fontSize: 32,
-        color: Cores.primaria
+        width: 30,
+        height: 30,
     },
-    btnPerfil: {
-        width: 34,
-        height: 34,
-        borderRadius: 17,
-        borderWidth: 2,
-        borderColor: Cores.primariaEscura,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    inputPost: {
+    acoesCabecalho:{
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
-        marginHorizontal: 16,
-        marginBottom: 8,
-        paddingVertical: 10,
-        paddingHorizontal: 14,
-        borderRadius: 999,
-        borderWidth: 2,
-        borderColor: Cores.cinza,
+        gap: 16,
     },
-    avatarPerfil: {
+    avatarImg: {
         width: 32,
         height: 32,
         borderRadius: 16,
+    },
+    btnPerfil: {
+        width: 36,
+        height: 36,
+        borderRadius: 17,
         borderWidth: 2,
+        boxSizing: 'border-box',
         borderColor: Cores.primaria,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    inputPostTexto: {
-        fontFamily: Fontes.base,
-        fontSize: Fontes.PP,
-        color: Cores.cinza,
     },
     lista: {
         paddingBottom: 24,

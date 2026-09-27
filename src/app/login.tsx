@@ -61,45 +61,47 @@ export default function Login() {
   return (
     <SafeAreaView style={styles.tela}>
       <StatusBar barStyle="dark-content" />
+
       <Pressable style={styles.cabecalho} onPress={voltar}>
         <FontAwesomeFreeSolid
-          name="arrow-left"
-          color={Cores.branco}
-          size={24}
-          style={styles.voltar}
+        name="arrow-left"
+        color={Cores.branco}
+        size={24}
+        style={styles.voltar}
         />
       </Pressable>
+
       <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === "android" ? "padding" : undefined}
+      style={styles.flex}
+      behavior={Platform.OS === "android" ? "padding" : undefined}
       >
         <ScrollView
-          contentContainerStyle={styles.conteudo}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.conteudo}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
         >
           <Text style={styles.titulo}>Log-in</Text>
 
           <Text style={styles.rotulo}>E-mail</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              value={usuario.email}
-              onChangeText={(valor) => setUsuario({ ...usuario, email: valor })}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
+            style={styles.campo}
+            value={usuario.email}
+            onChangeText={(valor) => setUsuario({ ...usuario, email: valor })}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
             />
           </View>
 
           <Text style={styles.rotulo}>Senha</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              value={usuario.senha}
-              onChangeText={(valor) => setUsuario({ ...usuario, senha: valor })}
-              autoCapitalize="none"
-              autoComplete="password"
+            style={styles.campo}
+            value={usuario.senha}
+            onChangeText={(valor) => setUsuario({ ...usuario, senha: valor })}
+            autoCapitalize="none"
+            autoComplete="password"
             />
           </View>
 
@@ -112,9 +114,13 @@ export default function Login() {
                 Não tem uma conta? Registre-se
               </Text>
             </Pressable>
+
           </View>
+
         </ScrollView>
+
       </KeyboardAvoidingView>
+
     </SafeAreaView>
   );
 }
@@ -160,11 +166,11 @@ const styles = StyleSheet.create({
     backgroundColor: Cores.preto,
     borderRadius: 999,
     paddingBottom: 4,
-    width: 360,
+    width: "100%",
+    maxWidth: 360,
     marginBottom: 4,
   },
   campo: {
-    alignItems: "center",
     backgroundColor: Cores.branco,
     borderWidth: 3,
     borderColor: Cores.preto,
@@ -174,7 +180,10 @@ const styles = StyleSheet.create({
     fontSize: Fontes.M,
     color: Cores.preto,
   },
-  acoes: { marginTop: 8, gap: 20 },
+  acoes: { 
+    marginTop: 8, 
+    gap: 20 
+  },
   link: {
     display: "flex",
     flexDirection: "row",

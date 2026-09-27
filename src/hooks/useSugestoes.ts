@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
-import { collection, query, limit, onSnapshot } from 'firebase/firestore'
+import { 
+    collection, 
+    query, 
+    limit, 
+    onSnapshot 
+} from 'firebase/firestore'
 import { banco } from '@/services/Firebase'
 import { type UsuarioTipo } from '@/types/Usuario'
 import { useAutenticacao } from '@/hooks/useAutenticacao'

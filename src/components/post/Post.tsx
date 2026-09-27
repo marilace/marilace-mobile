@@ -6,10 +6,13 @@ import { Emblemas } from '../misc/Emblemas'
 import { useAutenticacao } from '@/hooks/useAutenticacao'
 import { useCurtida } from '@/hooks/useCurtidas'
 import { usePublicacoes } from '@/hooks/usePublicacoes'
+import { useSalvo } from '@/hooks/useSalvos'
 import { ModalAcoesPostagem } from '../modais/ModalAcoesPostagem'
 import { ModalEditarPostagem } from '../modais/ModalEditarPostagem'
 import { ModalConfirmacao } from '../modais/ModalConfirmacao'
 import { FontAwesomeFreeSolid } from '@react-native-vector-icons/fontawesome-free-solid'
+import { ModalComentarios } from '../modais/ModalComentarios'
+import { router } from 'expo-router'
 
 interface PostProps {
     postId: string;
@@ -43,15 +46,17 @@ export function Post({
     emblemas
 }: PostProps){
 
+    const { curtido, alternarCurtida } = useCurtida(postId, authorId)
     const { usuario } = useAutenticacao()
-    const { curtido, alternarCurtida } = useCurtida(postId)
     const { excluirPublicacao } = usePublicacoes()
 
-    const [salvo, setSalvo] = useState(false)
+    const {salvo, alternarSalvo, salvando} = useSalvo(postId, 'post')
+
     const [menuAberto, setMenuAberto] = useState(false)
     const [modalEditarAberto, setModalEditarAberto] = useState(false)
     const [modalExcluirAberto, setModalExcluirAberto] = useState(false)
     const [excluindo, setExcluindo] = useState(false)
+    const [modalComentariosAberto, setModalComentariosAberto] = useState(false)
 
     const souAutor = usuario?.uid === authorId
 
@@ -67,9 +72,14 @@ export function Post({
         }
     }
 
+    const abrirPerfil = () => router.push(`/(logado)/perfil/${username}`)
+
     return (
         <View style={styles.card}>
-            <View style={styles.cabecalho}>
+            <Pressable
+            onPress={abrirPerfil}
+            style={styles.cabecalho}
+            >
                 {avatarSrc ? (
                     <Image source={{ uri: avatarSrc }} style={styles.avatarImg} />
                 ) : (
@@ -89,14 +99,14 @@ export function Post({
 
                 {souAutor && (
                     <Pressable
-                        hitSlop={10}
-                        onPress={() => setMenuAberto(true)}
-                        accessibilityLabel="Opções da publicação"
+                    hitSlop={10}
+                    onPress={() => setMenuAberto(true)}
+                    accessibilityLabel="Opções da publicação"
                     >
                         <FontAwesomeFreeSolid name="ellipsis" size={16} color={Cores.preto} />
                     </Pressable>
                 )}
-            </View>
+            </Pressable>
 
             <Text style={styles.conteudo}>{conteudo}</Text>
 
@@ -108,17 +118,17 @@ export function Post({
                 <View style={styles.acoes}>
                     <Pressable style={styles.acao} onPress={alternarCurtida} accessibilityLabel="Curtir">
                         <FontAwesomeFreeSolid
-                            name="star"
-                            size={18}
-                            color={curtido ? Cores.primaria : Cores.preto}
+                        name="star"
+                        size={18}
+                        color={curtido ? Cores.primaria : Cores.preto}
                         />
                         <Text style={styles.numero}>{curtidas}</Text>
                     </Pressable>
 
-                    <View style={styles.acao}>
+                    <Pressable style={styles.acao} onPress={() => setModalComentariosAberto(true)}>
                         <FontAwesomeFreeSolid name="comment" size={18} color={Cores.preto} />
                         <Text style={styles.numero}>{comentarios}</Text>
-                    </View>
+                    </Pressable>
 
                     <View style={styles.acao}>
                         <FontAwesomeFreeSolid name="share-nodes" size={18} color={Cores.preto} />
@@ -126,43 +136,50 @@ export function Post({
                     </View>
                 </View>
 
-                <Pressable onPress={() => setSalvo((v) => !v)} hitSlop={10} accessibilityLabel="Salvar">
+                <Pressable onPress={alternarSalvo} hitSlop={10} accessibilityLabel="Salvar">
                     <FontAwesomeFreeSolid
-                        name="bookmark"
-                        size={18}
-                        color={salvo ? Cores.primariaEscura : Cores.preto}
+                    name="bookmark"
+                    size={18}
+                    color={salvo ? Cores.primariaEscura : Cores.preto}
                     />
                 </Pressable>
             </View>
 
             <ModalAcoesPostagem
-                aberto={menuAberto}
-                fechar={() => setMenuAberto(false)}
-                onEditar={() => {
-                    setMenuAberto(false)
-                    setModalEditarAberto(true)
-                }}
-                onExcluir={() => {
-                    setMenuAberto(false)
-                    setModalExcluirAberto(true)
-                }}
+            aberto={menuAberto}
+            fechar={() => setMenuAberto(false)}
+            onEditar={() => {
+                setMenuAberto(false)
+                setModalEditarAberto(true)
+            }}
+            onExcluir={() => {
+                setMenuAberto(false)
+                setModalExcluirAberto(true)
+            }}
             />
 
             <ModalEditarPostagem
-                aberto={modalEditarAberto}
-                postId={postId}
-                conteudoAtual={conteudo}
-                imagemUrl={imagemUrl}
-                fechar={() => setModalEditarAberto(false)}
+            aberto={modalEditarAberto}
+            postId={postId}
+            conteudoAtual={conteudo}
+            imagemUrl={imagemUrl}
+            fechar={() => setModalEditarAberto(false)}
             />
 
             <ModalConfirmacao
-                aberto={modalExcluirAberto}
-                titulo="Excluir publicação"
-                mensagem="Tem certeza que deseja excluir esta publicação? Essa ação não pode ser desfeita."
-                confirmando={excluindo}
-                confirmar={excluir}
-                cancelar={() => setModalExcluirAberto(false)}
+            aberto={modalExcluirAberto}
+            titulo="Excluir publicação"
+            mensagem="Tem certeza que deseja excluir esta publicação? Essa ação não pode ser desfeita."
+            confirmando={excluindo}
+            confirmar={excluir}
+            cancelar={() => setModalExcluirAberto(false)}
+            />
+
+            <ModalComentarios
+            aberto={modalComentariosAberto}
+            postId={postId}
+            authorId={authorId}
+            fechar={() => setModalComentariosAberto(false)}
             />
         </View>
     )
@@ -171,7 +188,7 @@ export function Post({
 const styles = StyleSheet.create({
     card: {
         paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingVertical: 20,
         backgroundColor: Cores.branco,
     },
     cabecalho: {

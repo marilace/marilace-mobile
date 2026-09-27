@@ -72,43 +72,45 @@ export default function Registro() {
   return (
     <SafeAreaView style={styles.tela}>
       <StatusBar barStyle="dark-content" />
+
       <Pressable style={styles.cabecalho} onPress={voltar}>
         <FontAwesomeFreeSolid
-          name="arrow-left"
-          color={Cores.branco}
-          size={24}
-          style={styles.voltar}
+        name="arrow-left"
+        color={Cores.branco}
+        size={24}
+        style={styles.voltar}
         />
       </Pressable>
+
       <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === "android" ? "padding" : undefined}
+      style={styles.flex}
+      behavior={Platform.OS === "android" ? "padding" : undefined}
       >
         <ScrollView
-          contentContainerStyle={styles.conteudo}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.conteudo}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
         >
           <Text style={styles.titulo}>Registro</Text>
 
           <Text style={styles.rotulo}>Nome</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              autoCapitalize="sentences"
-              value={usuario.nome}
-              onChangeText={(valor) => setUsuario({ ...usuario, nome: valor })}
+            style={styles.campo}
+            autoCapitalize="sentences"
+            value={usuario.nome}
+            onChangeText={(valor) => setUsuario({ ...usuario, nome: valor })}
             />
           </View>
 
           <Text style={styles.rotulo}>Nome de usuário</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              autoCapitalize="none"
-              value={usuario.username}
-              onChangeText={(valor) =>
-                setUsuario({ ...usuario, username: valor })
+            style={styles.campo}
+            autoCapitalize="none"
+            value={usuario.username}
+            onChangeText={(valor) =>
+              setUsuario({ ...usuario, username: valor })
               }
             />
           </View>
@@ -116,34 +118,34 @@ export default function Registro() {
           <Text style={styles.rotulo}>E-mail</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              value={usuario.email}
-              onChangeText={(valor) => setUsuario({ ...usuario, email: valor })}
+            style={styles.campo}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            value={usuario.email}
+            onChangeText={(valor) => setUsuario({ ...usuario, email: valor })}
             />
           </View>
 
           <Text style={styles.rotulo}>Senha</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              placeholderTextColor={Cores.cinza}
-              autoCapitalize="none"
-              autoComplete="password"
-              value={usuario.senha}
-              onChangeText={(valor) => setUsuario({ ...usuario, senha: valor })}
+            style={styles.campo}
+            placeholderTextColor={Cores.cinza}
+            autoCapitalize="none"
+            autoComplete="password"
+            value={usuario.senha}
+            onChangeText={(valor) => setUsuario({ ...usuario, senha: valor })}
             />
           </View>
 
           <Text style={styles.rotulo}>Confirmar senha</Text>
           <View style={styles.sombra}>
             <TextInput
-              style={styles.campo}
-              placeholderTextColor={Cores.cinza}
-              autoCapitalize="none"
-              autoComplete="password"
+            style={styles.campo}
+            placeholderTextColor={Cores.cinza}
+            autoCapitalize="none"
+            autoComplete="password"
             />
           </View>
 
@@ -152,16 +154,19 @@ export default function Registro() {
 
             <Pressable onPress={abrirLogin} style={styles.link}>
               <FontAwesomeFreeSolid
-                name="right-to-bracket"
-                color={Cores.branco}
+              name="user-plus"
+              color={Cores.branco}
               />
               <Text style={styles.textoLink}>
-                Não tem uma conta? Registre-se
+                Já tem uma conta? Faça log-in
               </Text>
             </Pressable>
           </View>
+
         </ScrollView>
+
       </KeyboardAvoidingView>
+      
     </SafeAreaView>
   );
 }
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
   },
   conteudo: {
     flexGrow: 1,
-    justifyContent: "center", // no login o conteúdo fica centralizado na vertical
+    justifyContent: "center",
     paddingHorizontal: 16,
     paddingVertical: 32,
     gap: 8,
@@ -199,18 +204,18 @@ const styles = StyleSheet.create({
     fontSize: Fontes.P,
     fontWeight: "600",
     color: Cores.branco,
-    marginLeft: 24,
+    marginLeft: 4,
   },
   sombra: {
     alignSelf: "center",
     backgroundColor: Cores.preto,
     borderRadius: 999,
     paddingBottom: 4,
-    width: 400,
+    width: "100%",
+    maxWidth: 360,
     marginBottom: 4,
   },
   campo: {
-    alignItems: "center",
     backgroundColor: Cores.branco,
     borderWidth: 3,
     borderColor: Cores.preto,
@@ -220,7 +225,10 @@ const styles = StyleSheet.create({
     fontSize: Fontes.M,
     color: Cores.preto,
   },
-  acoes: { marginTop: 8, gap: 20 },
+  acoes: { 
+    marginTop: 8, 
+    gap: 20 
+  },
   link: {
     display: "flex",
     flexDirection: "row",

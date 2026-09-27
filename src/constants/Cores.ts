@@ -6,4 +6,5 @@ export const Cores = {
     branco: '#fffef2',
     preto: '#262424',
     cinza: '#aeaab2',
+    erro: '#e53e3e',
 }

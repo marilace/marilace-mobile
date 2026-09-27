@@ -31,8 +31,8 @@ export type ResultadoConexao = {
 
 export async function testarConexao(){
 
-    const [mensagemErro, setMensagemErro] = useState('Verificando conexão...');
-    const [conectado, setConectado] = useState(false);
+    const [mensagemErro, setMensagemErro] = useState('Verificando conexão...')
+    const [conectado, setConectado] = useState(false)
 
     try {
 
@@ -45,24 +45,24 @@ export async function testarConexao(){
             switch (error.code) {
                 case 'auth/user-not-found':
                 case 'auth/invalid-credential':
-                    setMensagemErro(`Conexão com o Firebase estabelecida com sucesso! ${error.code}`);
-                    setConectado(true);            
-                    break;
+                    setMensagemErro(`Conexão com o Firebase estabelecida com sucesso! ${error.code}`)
+                    setConectado(true)            
+                    break
 
                 case 'auth/api-key-not-valid.-please-pass-a-valid-api-key.':
-                    setMensagemErro('Chave de API do Firebase inválida!');
-                    setConectado(false);            
-                    break;
+                    setMensagemErro('Chave de API do Firebase inválida!')
+                    setConectado(false)            
+                    break
 
                 case 'auth/network-request-failed':
-                    setMensagemErro('Falha de rede! Verifique sua internet');
-                    setConectado(false);            
-                    break;
+                    setMensagemErro('Falha de rede! Verifique sua internet')
+                    setConectado(false)            
+                    break
 
                 case 'auth/too-many-requests':
-                    setMensagemErro('IP bloqueado temporariamente por excesso de tentativas (Aguarde alguns minutos).');
-                    setConectado(false);            
-                    break;  
+                    setMensagemErro('IP bloqueado temporariamente por excesso de tentativas (Aguarde alguns minutos).')
+                    setConectado(false)            
+                    break  
             }
         } else {
             setMensagemErro(`Erro imprevisto! (${error})`)

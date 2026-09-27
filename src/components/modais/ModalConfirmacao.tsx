@@ -1,4 +1,9 @@
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
+import { 
+    Modal, 
+    Pressable, 
+    StyleSheet, 
+    Text, 
+    View } from 'react-native'
 import { Cores } from '@/constants/Cores'
 import { Fontes } from '@/constants/Fontes'
 import { FontAwesomeFreeSolid } from '@react-native-vector-icons/fontawesome-free-solid'
@@ -36,16 +41,16 @@ export function ModalConfirmacao({
 
                 <View style={styles.acoes}>
                     <Pressable
-                        style={styles.btnCancelar}
-                        onPress={cancelar}
-                        disabled={confirmando}
+                    style={styles.btnCancelar}
+                    onPress={cancelar}
+                    disabled={confirmando}
                     >
                         <Text style={styles.btnCancelarTexto}>{textoCancelar}</Text>
                     </Pressable>
                     <Pressable
-                        style={styles.btnConfirmar}
-                        onPress={confirmar}
-                        disabled={confirmando}
+                    style={styles.btnConfirmar}
+                    onPress={confirmar}
+                    disabled={confirmando}
                     >
                         <Text style={styles.btnConfirmarTexto}>
                             {confirmando ? 'Excluindo...' : textoConfirmar}

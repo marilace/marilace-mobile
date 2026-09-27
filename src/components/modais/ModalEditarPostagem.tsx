@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Image, Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { 
+    Image, 
+    Modal, 
+    Pressable, 
+    StyleSheet, 
+    Text, 
+    TextInput, 
+    View 
+} from 'react-native'
 import { Cores } from '@/constants/Cores'
 import { Fontes } from '@/constants/Fontes'
 import { usePublicacoes } from '@/hooks/usePublicacoes'
@@ -59,13 +67,13 @@ export function ModalEditarPostagem({ aberto, postId, conteudoAtual, imagemUrl, 
                 </View>
 
                 <TextInput
-                    style={styles.inputEdicao}
-                    multiline
-                    maxLength={300}
-                    value={texto}
-                    onChangeText={setTexto}
-                    editable={!salvando}
-                    placeholder="O que você está pensando?"
+                style={styles.inputEdicao}
+                multiline
+                maxLength={300}
+                value={texto}
+                onChangeText={setTexto}
+                editable={!salvando}
+                placeholder="O que você está pensando?"
                 />
                 <Text style={styles.contador}>{texto.length}/300</Text>
 

@@ -3,9 +3,9 @@ import { Fontes } from "@/constants/Fontes";
 import { AutenticacaoProvider } from "@/contexts/AutenticacaoContexto";
 import { useAutenticacao } from "@/hooks/useAutenticacao";
 import {
-    autenticacao,
-    FirebaseError,
-    signInWithEmailAndPassword,
+  autenticacao,
+  FirebaseError,
+  signInWithEmailAndPassword,
 } from "@/services/Firebase";
 
 //TODO: substituir pelo tabler icons (a mesma q o web)
@@ -17,7 +17,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context"
+import { AcessibilidadeProvider } from "@/contexts/AcessibilidadeContexto";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -91,14 +92,15 @@ function Validacoes() {
 
   useEffect(() => {
     if (!conectadoFirebase || !fontes || !carregando) return;
-
     const grupoProtegido = segments[0] === "(logado)";
 
     if (!usuario && grupoProtegido) {
       router.replace("/"); //usuario nao logado: redireciona p/ login
+
     } else if (usuario && !grupoProtegido) {
       router.replace("/(logado)/home"); //usuario logado: forum
     }
+
   }, [usuario, conectadoFirebase, fontes, carregando, segments]);
 
   if (mensagemErro) {
@@ -106,9 +108,9 @@ function Validacoes() {
       <SafeAreaView style={styles.tela}>
         <View style={styles.erro}>
           <FontAwesomeFreeSolid
-            name="circle-exclamation"
-            size={56}
-            color={Cores.rosa}
+          name="circle-exclamation"
+          size={56}
+          color={Cores.rosa}
           />
           <Text style={styles.erroMensagem}>{mensagemErro}</Text>
         </View>
@@ -123,6 +125,7 @@ function Validacoes() {
         <Stack.Screen name="index" />
         <Stack.Screen name="login" />
         <Stack.Screen name="registro" />
+        <Stack.Screen name="sobre" />
       </Stack>
     </SafeAreaProvider>
   );
@@ -130,9 +133,12 @@ function Validacoes() {
 
 export default function RootLayout() {
   return (
-    <AutenticacaoProvider>
-      <Validacoes />
-    </AutenticacaoProvider>
+    <AcessibilidadeProvider>
+      <AutenticacaoProvider>
+        <Validacoes />
+      </AutenticacaoProvider>
+    </AcessibilidadeProvider>
+
   );
 }
 
